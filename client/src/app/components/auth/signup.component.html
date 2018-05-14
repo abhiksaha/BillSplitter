@@ -1,0 +1,65 @@
+<div class="col-md-4 col-md-offset-4 marT100">
+    <form class="padding-10" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+			<label for="userName">Enter User Name</label>
+            <input
+                    type="text"
+                    id="userName"
+                    class="form-control"
+                    placeholder="User Name"
+                    formControlName="userName" 
+					autocomplete="off"/>
+			<p class="alert alert-danger" *ngIf="!signUpForm.controls['userName'].valid && signUpForm.controls['userName'].touched">
+				<span *ngIf="signUpForm.controls['userName'].errors?.required">
+					Username is required
+				</span>
+				<span *ngIf="signUpForm.controls['userName'].errors?.minlength">
+					Username must be at least of 8 characters.
+				</span>
+				<span *ngIf="signUpForm.controls['userName'].errors?.maxlength">
+					Username must not be greater than 20 characters.
+				</span>
+			</p>
+		</div>
+		<div class="form-group">
+			<label for="email">Enter Email ID</label>
+            <input  type="email"
+                    id="email"
+                    class="form-control"
+                    placeholder="Your Email"
+                    formControlName="email" 
+					autocomplete="off"/>
+			<p class="alert alert-danger" *ngIf="!signUpForm.controls['email'].valid && signUpForm.controls['email'].touched">
+				<span *ngIf="signUpForm.controls['email'].errors?.required">
+					Email-id is required.
+				</span>
+				<span *ngIf="signUpForm.controls['email'].errors?.pattern">
+					Invalid Email-id.
+				</span>
+			</p>
+		</div>
+		<div class="form-group">
+			<label for="password">Enter Password</label>
+            <input type="password"
+                   id="password"
+                   class="form-control"
+                   formControlName="password"
+                   placeholder="Password">
+				   
+			<p class="alert alert-danger" *ngIf="!signUpForm.controls['password'].valid && signUpForm.controls['password'].touched">
+				<span *ngIf="signUpForm.controls['password'].errors?.required">
+					Password is required
+				</span>
+				<span *ngIf="signUpForm.controls['password'].errors?.minlength">
+					Password must be at least of 6 characters.
+				</span>
+			</p>
+		</div>
+		<div class="form-group text-center">
+            <p class="alert alert-danger" *ngIf = "formInvalid">
+                Please fill the form correctly
+            </p>
+            <button type="submit" class="btn" >Sign up</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,19 @@
+<div class="row">
+	<div class="col-xs-12">
+		<input type="text" class="form-control" [(ngModel)] = "autoCompleteText" id= "id"  name = "name" (keyup)="getAutocompleteList()"
+			(focus) = "onFocusAutocompleteTextbox()"
+			(blur) = "onBlurAutocompleteTextbox($event)"
+			placeholder="Enter min 2 Characters.."
+			autocomplete="off"/>
+		<div class="col-xs-12 nopadding">
+			<ul id="autocompleteList" class="autocomplete-list" *ngIf="autocompleteList.length && hasDataFetchingComplete && isAutocompleteListVisible">
+				<li *ngFor="let item of autocompleteList; let i = index;">
+					<a href="javascript:void(0)" (click)="onSelectAutocompleteItem(item.resName)">{{item.resName}}</a>
+				</li>
+			</ul>
+			<ul class="autocomplete-list" *ngIf="autocompleteList.length == 0 && hasDataFetchingComplete && isAutocompleteListVisible">
+				<li><a href="javascript:void()">No records found</a></li>
+			</ul>
+		</div>
+	</div>
+</div>

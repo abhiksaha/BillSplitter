@@ -1,0 +1,43 @@
+<div class="col-md-4 col-md-offset-4 marT100">
+    <form class="padding-10" [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+			<label for="userName">Enter User Name</label>
+            <input
+                    type="text"
+                    id="userName"
+                    class="form-control"
+                    placeholder="Your User Name"
+                    formControlName="userName"
+					autocomplete="off" />
+					
+			<p class="alert alert-danger" *ngIf="!signInForm.controls['userName'].valid && signInForm.controls['userName'].touched">
+				<span *ngIf="signInForm.controls['userName'].errors?.required">
+					User name is required
+				</span>
+			</p>
+		</div>		
+		<div class="form-group">
+			<label for="password">Enter Password</label>
+            <input type="password"
+                   id="password"
+                   class="form-control"
+                   formControlName="password"
+                   placeholder="Password">
+			<p class="alert alert-danger" *ngIf="!signInForm.controls['password'].valid && signInForm.controls['password'].touched">
+				<span *ngIf="signInForm.controls['password'].errors?.required">
+					Password is required
+				</span>
+				<span *ngIf="signInForm.controls['password'].errors?.minlength">
+					Password must be at least of 6 characters.
+				</span>
+			</p>
+		</div>
+		<div class="form-group text-center">
+			<p class="alert alert-danger" *ngIf = "formInvalid">
+                Please fill the form correctly
+            </p>
+			<br/>
+            <button type="submit" class="btn">Sign In</button>
+        </div>
+    </form>
+</div>

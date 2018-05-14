@@ -1,0 +1,15 @@
+<div class="col-xs-12 col-md-1 sidebar nopadding">    
+    <div *ngFor="let navItem of navItems; let i = index;">
+        <div class="nav col-md-12 text-center" 
+            [ngClass]="navItems.length > 4 && splitNavVisible ? 'w_20' : 'col-xs-3'" 
+            [routerLinkActive]="['active']" [hidden]="(navItem.title == 'split' && !splitNavVisible)">
+            <a  [routerLink]="navItem.title" title="{{navItem.title}}" class="text-center">
+                <span class="col-xs-12 col-sm-6 col-md-12 nopadding">
+                    <i class="fa fa-{{navItem.icon}}" aria-hidden="true"></i>
+                </span>
+                <p class="col-md-12 col-sm-6 nopadding hidden-xs" style="margin-top:5px;">{{navItem.title}}</p>
+            </a>
+        </div>
+        
+    </div>
+</div>

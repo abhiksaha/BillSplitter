@@ -1,0 +1,21 @@
+.autocomplete-list{
+	width:100%;
+	border:1px solid #ccc;
+	background:rgba(0,0,0,0.9);
+	position:absolute;
+	top:0;
+	max-height:200px;
+	overflow:auto;
+}
+.autocomplete-list li{
+	list-style-type:none;
+}
+
+.autocomplete-list li a{
+	padding:10px 15px;
+	display:block;
+}
+
+.autocomplete-list li a:hover{
+	text-decoration:underline!important;
+}

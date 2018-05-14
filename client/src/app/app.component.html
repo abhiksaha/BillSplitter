@@ -1,0 +1,27 @@
+<header>
+	<div class="row nomargin">
+		<div class="col-xs-12 nopadding" [ngClass]="authService.isLoggedIn() ? 'col-md-11 col-md-offset-1' : '' ">
+			<div class="col-xs-7 text-left logo">
+				<h3>Bill Splitter</h3>
+			</div>
+			<div class="col-xs-5 text-right">
+				<a href="javascript:void(0)" class="btn btn-small" *ngIf="!authService.isLoggedIn() && this.router.url != '/signup'" [routerLink]="['/signup']">Sign Up &nbsp;<i class="fa fa-sign-in fa-small" aria-hidden="true"></i></a>
+				<a href="javascript:void(0)" class="btn btn-small" *ngIf="!authService.isLoggedIn() && this.router.url != '/signin'" [routerLink]="['/signin']">Sign In &nbsp;<i class="fa fa-sign-in fa-small" aria-hidden="true"></i></a>
+				<a href="javascript:void(0)" class="btn btn-small" *ngIf="authService.isLoggedIn()" (click)="onClickLogOut()">Log Out &nbsp;<i class="fa fa-sign-in fa-small fa-rotate-180" aria-hidden="true"></i></a>				
+				
+				<div class="user-name pull-right hidden-xs" *ngIf="authService.isLoggedIn()">
+					<span class="user">Welcome {{authService.userName}}</span>
+					<i class="fa fa-user fa-border fa-small" aria-hidden="true"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+<side-bar *ngIf="authService.isLoggedIn()"></side-bar>
+<div class="container-fluid">
+	<div class="row">		
+		<section class="col-xs-12 col-md-11 col-md-offset-1 main-container">
+			<router-outlet></router-outlet>
+		</section>
+	</div>
+</div>

@@ -1,0 +1,28 @@
+<div class="col-xs-12">
+	<h5><strong>Split History</strong></h5>
+	<br/>
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Split Name</th>
+					<th>Restaurant Name</th>
+					<th>Bill Date</th>
+					<th>Created By</th>
+					<th>Created On</th>	
+					<th></th>						
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let savedData of AllSplitSavedData; let i = index;">
+					<td>{{savedData.splitName}}</td>
+					<td>{{savedData.restautantName}}</td>
+					<td>{{savedData.billDated | date:"MM/dd/yyyy"}}</td>
+					<td>{{savedData.createdBy}}</td>
+					<td>{{savedData.createdOn | date:"MM/dd/yyyy"}}</td>
+					<td class="text-right"><a href="javascript:void(0)" class="btn btn-small" (click)="onClickViewDetailsBtn(i)">View Details &nbsp; <i aria-hidden="true" class="fa fa-long-arrow-right fa-small"></i></a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

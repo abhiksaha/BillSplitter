@@ -1,0 +1,298 @@
+<div class="col-xs-12">
+	<div class="row">
+		<div class="col-xs-12 text-center">
+			<h4>
+				Split <strong>{{splitService.homePageData.RestaurantName}}'s</strong> bill
+				<span *ngIf="splitService.homePageData.BillDated != ''">  dated {{ splitService.homePageData.BillDated }} </span>
+				between <strong>{{allMembers.length}}</strong>  Friends
+			</h4>
+			<br/>
+		</div>
+	</div>
+	<br/>
+</div>
+<div class="col-xs-12 nopadding">
+	<div class="col-xs-12 section-conatiner" [ngClass]="(isDrinkBillSplit && isFoodBillSplit) ? 'col-md-6' : 'col-md-6 col-md-offset-3'" *ngIf="isDrinkBillSplit">	
+		<div class="section-header clearfix">
+			<h4 class="pull-left">Split Drinks Bill</h4>
+			<div class="col-xs-4 col-md-6 nopadding pull-right">
+				<a href="javascript:void(0)" class="btn pull-right" (click)="openAddItemModal('drink')">
+					<i class="fa fa-glass fa-small" aria-hidden="true"></i> &nbsp;
+					Add Drink Items
+				</a>
+			</div>
+		</div>
+		<div class="row" *ngIf="isDrinkBillNotSplited">
+			<div class="col-xs-12 error-block">
+				<div class="alert alert-danger">
+					<ul>
+						<li>
+							Please Split Drink's Bill .
+						</li>
+					</ul>
+				</div>				
+			</div>
+		</div>
+		<br/>
+		<div class="row">
+			<div class="col-xs-12" *ngFor="let spilttedDetail of individualMemberSplittedDetails; let i = index">
+				<div class="item-container">
+					<h5 class="col-xs-6 nopadding text-left"><i class="fa fa-male fa-black  fa-small" aria-hidden="true"></i> &nbsp; {{spilttedDetail.name}}'s Share</h5>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Count</th>
+								<th>Item Name</th>
+								<th>Price</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let drinkBillDetail of spilttedDetail.drinkDetails; let j = index">
+								<td>{{drinkBillDetail.itemCount}}</td>
+								<td>{{drinkBillDetail.itemName}}</td>
+								<td>{{drinkBillDetail.price}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<br/>
+			</div>			
+		</div>
+		<br/>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="item-container">
+					<h5><strong>Discounts</strong></h5>
+					<form class="form-horizontal marT10">
+						<div class="form-group">
+							<label for="drinks_discount" class="col-xs-8 control-label">Enter drink's discount %</label>
+							<div class="col-xs-4">
+								<input type="number" class="form-control" id="drinks_discount" name="drinks_discount" min="0" placeholder="Add Discount" [(ngModel)]="drinkBillDiscount"/>
+							</div>
+						</div>
+					</form>
+					<h5><strong>Taxes</strong></h5>
+					<form class="form-horizontal marT10">
+						<div class="form-group marB0" *ngFor="let drinktax of totalDrinkTaxes; let i = index;">
+							<div class="col-xs-7 padR0">
+								<input type="text" class="form-control no-border-right-radius no-border-bottom" id="name_{{i}}" name="name_{{i}}" placeholder="Add Tax Name" [(ngModel)]="drinktax.taxName"/>
+							</div>
+							<div class="col-xs-3 nopadding">
+								<input type="number" class="form-control no-border-left-radius no-border-right-radius no-border-bottom" min="0" id="amount_{{i}}" name="amount_{{i}}" placeholder="Add Tax Amount" [(ngModel)]="drinktax.taxAmount"/>
+							</div>
+							<div class="col-xs-2 padL0">
+								<a href="javascript:void(0)" class="add-tax-btn btn-block" (click)="onClickRemoveTaxBtn('drink', i)"><i class="fa fa-minus fa-small fa-black" aria-hidden="true"></i></a>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<div class="col-xs-7 padR0">
+								<input type="text" class="form-control no-border-right-radius" name="drink_tax_name" placeholder="Add Tax Name" [(ngModel)]="drinkTaxName"/>
+							</div>
+							<div class="col-xs-3 nopadding">
+								<input type="number" class="form-control no-border-left-radius no-border-right-radius" name="drink_tax_val" min="0" placeholder="Add Tax Amount" [(ngModel)]="drinkTaxAmount"/>
+							</div>
+							<div class="col-xs-2 padL0">
+								<a href="javascript:void(0)" class="add-tax-btn btn-block" (click)="onClickAddTaxBtn('drink')"><i class="fa fa-plus fa-small fa-black" aria-hidden="true"></i></a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12 section-conatiner" [ngClass]="(isDrinkBillSplit && isFoodBillSplit) ? 'col-md-6' : 'col-md-6 col-md-offset-3'" *ngIf="isFoodBillSplit">	
+		<div class="section-header clearfix">
+			<h4 class="pull-left">Split Food Bill</h4>
+			<div class="col-xs-4 col-md-6 nopadding pull-right">
+				<a href="javascript:void(0)"  class="btn pull-right" (click)="openAddItemModal('food')">
+					<i class="fa fa-cutlery fa-small" aria-hidden="true"></i> &nbsp;
+					Add Food Items
+				</a>
+			</div>
+		</div>
+		<div class="row" *ngIf="isFoodBillNotSplited">
+			<div class="col-xs-12 error-block">
+				<div class="alert alert-danger">
+					<ul>
+						<li>
+							Please Split Food's Bill.
+						</li>
+					</ul>
+				</div>				
+			</div>
+		</div>
+		<br/>
+		<div class="row">
+			<div class="col-xs-12" *ngFor="let spilttedDetail of individualMemberSplittedDetails; let i = index">
+				<div class="item-container">
+					<h5 class="col-xs-6 nopadding text-left"><i class="fa fa-male fa-black fa-small" aria-hidden="true"></i> &nbsp; {{spilttedDetail.name}}'s Share</h5>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Count</th>
+								<th>Item Name</th>
+								<th>Price</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let foodBillDetail of spilttedDetail.foodDetails; let j = index">
+								<td>{{foodBillDetail.itemCount}}</td>
+								<td>{{foodBillDetail.itemName}}</td>
+								<td>{{foodBillDetail.price}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<br/>
+			</div>	
+		</div>
+		<br/>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="item-container">
+					<h5><strong>Discounts</strong></h5>
+					<form class="form-horizontal marT10">
+						<div class="form-group">
+							<label for="food_discount" class="col-xs-8 control-label">Enter food's discount %</label>
+							<div class="col-xs-4">
+								<input type="number" class="form-control" id="food_discount" name="food_discount" min="0" placeholder="Add Discount" [(ngModel)]="foodBillDiscount"/>
+							</div>
+						</div>
+					</form>				
+					<h5><strong>Taxes</strong></h5>
+					<form class="form-horizontal marT10">
+						<div class="form-group marB0" *ngFor="let foodtax of totalFoodTaxes; let i = index;">
+							<div class="col-xs-7 padR0">
+								<input type="text" class="form-control no-border-right-radius no-border-bottom" id="name_{{i}}" name="name_{{i}}" placeholder="Add Tax Name" [(ngModel)]="foodtax.taxName"/>
+							</div>
+							<div class="col-xs-3 nopadding">
+								<input type="number" class="form-control no-border-left-radius no-border-right-radius no-border-bottom" min="0" id="amount_{{i}}" name="amount_{{i}}" placeholder="Add Tax Amount" [(ngModel)]="foodtax.taxAmount"/>
+							</div>
+							<div class="col-xs-2 padL0">
+								<a href="javascript:void(0)" class="add-tax-btn btn-block" (click)="onClickRemoveTaxBtn('food', i)"><i class="fa fa-minus fa-small fa-black" aria-hidden="true"></i></a>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<div class="col-xs-7 padR0">
+								<input type="text" class="form-control no-border-right-radius" name="food_tax_name" placeholder="Add Tax Name" [(ngModel)]="foodTaxName"/>
+							</div>
+							<div class="col-xs-3 nopadding">
+								<input type="number" class="form-control no-border-left-radius no-border-right-radius" name="food_tax_val" min="0" placeholder="Add Tax Amount" [(ngModel)]="foodTaxAmount"/>
+							</div>
+							<div class="col-xs-2 padL0">
+								<a href="javascript:void(0)" class="add-tax-btn btn-block" (click)="onClickAddTaxBtn('food')"><i class="fa fa-plus fa-small fa-black" aria-hidden="true"></i></a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>	
+	</div>
+</div>
+<div class="col-xs-12">
+	<div class="row">
+		<div class="col-xs-12 col-sm-8 col-sm-offset-2 text-center">			
+			<br/>
+			<a href="javascript:void(0)" class="btn" (click)= "onClickGenerateCompleteBill()">Generate Complte Bill</a>
+		</div>
+	</div>
+</div>
+
+<div class="item-selection-modal-ovelay" *ngIf="toggleItemSelectionModal" ></div>
+<div class="item-selection-modal row" *ngIf="toggleItemSelectionModal" >
+	<div class="section-header clearfix">
+		<h4 class="pull-left">Split {{ (splitType == 'food') ? 'Food' : 'Drinks' }} Bill</h4>
+		<a href="javascript:void(0)" (click)="closeItemSelectionModal()" class="pull-right"><i class="fa fa-times" aria-hidden="true"></i></a>
+	</div>
+	<br/>
+	<div class="col-xs-12 cleafix split-modal-content">		
+		<form class="form-inline">
+			<div class="row">
+				<div class="col-xs-12 col-sm-4">			
+					<label for="item">Select Item : </label>
+					<select class="form-control mb-2 mr-sm-2 mb-sm-0" id="item" name="item" [(ngModel)]="itemName" *ngIf="splitType == 'food'">
+						<option value="">Please Select</option>
+						<option *ngFor="let menuItem of foodMenuList" [ngValue]="menuItem.itemName">{{menuItem.itemName}}</option>
+					</select>
+					<select class="form-control mb-2 mr-sm-2 mb-sm-0" id="item" name="item" [(ngModel)]="itemName" *ngIf="splitType == 'drink'">
+						<option value="">Please Select</option>
+						<option *ngFor="let menuItem of drinksMenuList" [ngValue]="menuItem.itemName">{{menuItem.itemName}}</option>
+					</select>
+				</div>
+				<div class="col-xs-12 col-sm-4">			
+					<label for="quantity">Add Quantity : </label>
+					<input type="number" class="form-control mb-2 mr-sm-2 mb-sm-0" name="quantity" min="0" id="quantity" [(ngModel)]="quantity"/>
+				</div>
+				<div class="col-xs-12 col-sm-4 text-center">
+					<span class="pull-left">
+						<input type="checkbox" name="split_equally" id="split_equally" [(ngModel)]="isSplitEqually"/>
+						<label class="col-xs-12 nopadding" for="split_equally">
+							<i class="fa fa-check-square-o fa-green" *ngIf="isSplitEqually" aria-hidden="true"></i> 
+							<i class="fa fa-square-o fa-black" *ngIf="!isSplitEqually" aria-hidden="true"></i> 
+							<span style="vertical-align:super">Split Equally</span>
+						</label>
+					</span>
+					<a href="javascript:void(0)" class="btn btn-small pull-right" (click)="onClickAddItems()">Add Items &nbsp;&nbsp; <i class="fa fa-plus fa-small" aria-hidden="true"></i></a>
+				</div>
+			</div>
+		</form>
+		<hr/>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class ="fixed-header-table-content table-responsive">
+					<table class="table table-striped nomargin">
+						<thead>
+							<tr>
+								<th width="2%"></th>
+								<th width="13%">Item name</th>
+								<th *ngFor="let member of allMembers; let i = index" [ngStyle]="{'width': (100 - 20)/allMembers.length+'%'}" class="text-center">
+									{{member.name}}
+								</th>
+								<th width="5%"></th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				<div class="table-content table-responsive">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th width="2%"></th>
+								<th width="13%">Item name</th>
+								<th *ngFor="let member of allMembers; let i = index" [ngStyle]="{'width': (100 - 20)/allMembers.length+'%'}" class="text-center">
+									{{member.name}}
+								</th>
+								<th width="5%"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let item of items; let i = index">
+								<td>
+									{{item.index}}
+								</td>
+								<td>
+									{{item.value}} - {{item.price}} RS.
+								</td>
+								<td *ngFor="let member of allMembers; let j = index" class="text-center">
+									<input type="checkbox" [checked]="item.isChekced[j]" id="{{i}}_{{j}}" (change)="onChangeItemCheckbox($event, item, j)"/>
+									<label class="col-xs-12 nopadding" for="{{i}}_{{j}}">
+										<i class="fa fa-check-square-o fa-green" *ngIf="item.isChekced[j]" aria-hidden="true"></i> 
+										<i class="fa fa-square-o fa-black" *ngIf="!item.isChekced[j]" aria-hidden="true"></i> 
+									</label>
+								</td>
+								<td>
+									<a href="javascript:void(0)" title="remove" (click)="onClickRemoveItem(i)"><i class="fa fa-trash fa-black fa-small" aria-hidden="true"></i> </a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3 text-center">
+		<a href="javascript:void(0)" class="btn" (click)="onClickDoneButton()">Done <i aria-hidden="true" class="fa fa-long-arrow-right fa-small"></i></a>
+	</div>
+</div>

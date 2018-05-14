@@ -1,0 +1,96 @@
+<div class="col-xs-12">
+	<div class="row">
+		<div class="col-xs-6 text-left">
+			<h5 *ngIf="SplitName !=''">
+				<span>Split name: <strong>{{SplitName}}</strong></span>
+			</h5>
+			<br/>
+			<h5>
+				<span>Splitted Bill of <strong>{{RestaurantName}}</strong>
+					<span *ngIf="BillDated != ''">  dated {{ BillDated }} </span>
+				</span>
+			</h5>
+		</div>
+		<div class="col-xs-6 text-right">
+			<a  href="javascript:void(0)" class="btn btn-small" (click)="onClickExportBtn()"><i class="fa fa-file-excel-o fa-small" aria-hidden="true"></i> &nbsp; Export</a>
+			<a  *ngIf="SplitName ==''" href="javascript:void(0)" class="btn btn-small" (click)="onClickSaveSplitBtn()"><i class="fa fa-floppy-o fa-small" aria-hidden="true"></i> &nbsp; Save Split</a>
+		</div>
+	</div>
+	<br/>
+</div>
+<div class="col-xs-12 col-sm-6 col-md-3" *ngFor="let spllitedData of splittedBillDataForView; let i = index" [ngClass]="(i%4 == 0) ? 'clear' : ''">
+	<div class="col-xs-12 bill-details-block">
+		<h5><i class="fa fa-male fa-black fa-small" aria-hidden="true"></i> &nbsp; {{spllitedData.name}}'s bill</h5>
+		<br/>
+		<div class="col-xs-12 nopadding detail-block" *ngIf="spllitedData.dinksDataArr.length">
+			<h6><strong>Drink Bill Details</strong></h6>
+			<br/>
+			<div class="col-xs-12 nopadding" *ngFor="let drinksDatobj of spllitedData.dinksDataArr; let j = index">				
+				<div class="col-xs-8 nopadding">
+					<div class="col-xs-2 nopadding text-center" *ngIf="drinksDatobj.itemCount">
+						<span>{{drinksDatobj.itemCount}}</span>
+					</div>
+					<div class="nopadding" *ngIf="drinksDatobj.type != 'total'" [ngClass]="drinksDatobj.itemCount ? 'col-xs-10 ': 'col-xs-12'">
+						<span>{{drinksDatobj.itemName}}</span>
+					</div>
+					<div class="col-xs-12 nopadding marT5" *ngIf="drinksDatobj.type == 'total'">
+						<strong>{{drinksDatobj.itemName}}</strong>
+					</div>
+				</div>
+				<div class="col-xs-4 nopadding text-right">
+					<span class="padL15" *ngIf="drinksDatobj.type != 'total'">{{drinksDatobj.itemValue}}</span>
+					<strong *ngIf="drinksDatobj.type == 'total'" class="marT5">{{drinksDatobj.itemValue}}</strong>
+				</div>
+			</div>
+			<br/>
+		</div>
+		<div class="col-xs-12 nopadding detail-block" *ngIf="spllitedData.foodDataArr.length">
+			<h6><strong>Food Bill Details</strong></h6>
+			<br/>
+			<div class="col-xs-12 nopadding" *ngFor="let foodDatobj of spllitedData.foodDataArr; let j = index">				
+				<div class="col-xs-8 nopadding">
+					<div class="col-xs-2 nopadding text-center" *ngIf="foodDatobj.itemCount">
+						<span *ngIf="foodDatobj.itemCount">{{foodDatobj.itemCount}}</span>
+					</div>
+					<div class="nopadding" *ngIf="foodDatobj.type != 'total'" [ngClass]="foodDatobj.itemCount ? 'col-xs-10 ': 'col-xs-12'">
+						<span>{{foodDatobj.itemName}}</span>
+					</div>
+					<div class="col-xs-12 nopadding marT5" *ngIf="foodDatobj.type == 'total'">
+						<strong>{{foodDatobj.itemName}}</strong>
+					</div>
+				</div>
+				<div class="col-xs-4 nopadding text-right">
+					<span class="padL15" *ngIf="foodDatobj.type != 'total'">{{foodDatobj.itemValue}}</span>
+					<strong *ngIf="foodDatobj.type == 'total'" class="marT5">{{foodDatobj.itemValue}}</strong>
+				</div>
+			</div>
+			<br/>
+		</div>
+		<hr/>
+		<div class="col-xs-12 nopadding" *ngIf="spllitedData.totalDataArr.length">
+			<div class="col-xs-12 nopadding" *ngFor="let totalDatobj of spllitedData.totalDataArr; let j = index">
+				<div class="col-xs-8 nopadding">
+					<strong>{{totalDatobj.itemName}}</strong>
+				</div>
+				<div class="col-xs-4 nopadding text-right">
+					<strong>{{totalDatobj.itemValue}}</strong>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="save-split-modal-ovelay" *ngIf="isSaveSplitBtnClicked" ></div>
+<div class="save-split-modal row" *ngIf="isSaveSplitBtnClicked" >	
+	<div class="col-xs-12">
+		<form>
+			<div class="form-group">
+				<label for="splitName">Enter Split Name</label>
+				<input type="text" class="form-control" id="splitName" name="splitName" [(ngModel)]="saveSplitName" />
+			</div>
+			<div class="form-group text-center">
+				<a href="javascript:void(0)" class="btn btn-small" (click)="saveSplit()">Save Split</a>
+				<a href="javascript:void(0)" class="btn btn-small" (click)="cancelSaveSplit()">Cancel</a>
+			</div>
+		</form>
+	</div>
+</div>

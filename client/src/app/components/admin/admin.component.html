@@ -1,0 +1,178 @@
+<button class="btn btn-small pull-right" *ngIf="isAllDataSectionVisible" (click)="onAddNewDataBtnClick()">Add New Data</button>
+
+
+<div class="row" *ngIf="isAllDataSectionVisible">
+	<div class="col-xs-12">
+		<div class="col-xs-12 col-md-6 col-md-offset-3 rest-data-container" *ngFor="let res of allRestaurantList; let i = index">		
+			<h4>{{res.restaurantName}}</h4>
+			<h5>{{res.restaurantAddress}}</h5>
+			<div class="col-xs-12 col-sm-6 nopadding">
+				<p class="text-center"><b>Food Items</b></p>
+				<div class="col-xs-12 nopadding marT5" *ngFor="let item of res.foodMenu; let i = index;">
+					<div class="col-xs-8 text-left">
+						<b>{{item.itemName}}</b>
+					</div>
+					<div class="col-xs-4 text-right">
+						{{item.itemPrice}}
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-6 nopadding">
+				<p class="text-center"><b>Drink Items</b></p>
+				<div class="col-xs-12 nopadding marT5" *ngFor="let item of res.drinksMenu; let i = index;">
+					<div class="col-xs-8 text-left">
+						<b>{{item.itemName}}</b>
+					</div>
+					<div class="col-xs-4 text-right">
+						{{item.itemPrice}}
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 text-center marT10">
+				<a href="javascript:void(0)" class="btn btn-small" (click)="onClickEditData(res)">Edit Data</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row" *ngIf="isAddNewSectionVisible || isEditSectionVisible">
+	<div class="col-xs-12 col-md-6 col-md-offset-3">
+		<div class="col-xs-12 cleafix nopadding">
+			<h5 class="pull-left">{{isEditSectionVisible ? 'Edit' : 'Add New'}} Details</h5>
+		</div>
+		<hr/>
+		<form>			
+			<div class="form-group">
+				<label for="name">{{isEditSectionVisible ? 'Edit' : 'Add'}} Restaurant's Name</label>
+				<input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" [(ngModel)]="newRestaurantName" />
+			</div>
+			<div class="form-group">
+				<label for="address">{{isEditSectionVisible ? 'Edit' : 'Add'}} Restaurant's Address</label>
+				<input type="text" class="form-control" id="address" name="address" placeholder="Enter Address" [(ngModel)]="newRestaurantAddress" />
+			</div>
+			<div class="form-group">
+				<label for="item">{{isEditSectionVisible ? 'Edit' : 'Enter'}} Food Menu</label>				
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="col-xs-6 nopadding">
+							Item Name
+						</div>
+						<div class="col-xs-3 nopadding">					
+							Item Price	
+						</div>
+						<div class="col-xs-2 nopadding">
+							Discount Avl ?
+						</div>
+						<div class="col-xs-1 nopadding text-center">	
+							&nbsp;
+						</div>
+					</div>
+					<div class="col-xs-12">
+						<div class="col-xs-6 nopadding">
+							<input type="text" class="form-control no-border-left-radius no-border-right-radius" id="itemName" name="itemName" placeholder="Add Item Name" [(ngModel)]="newFoodItemName"/>
+						</div>
+						<div class="col-xs-3 nopadding">
+							<input type="number" class="form-control no-border-right-radius no-border-left-radius" id="itemPrice" name="itemPrice" placeholder="Add Price" [(ngModel)]="newFoodItemPrice"/>					
+						</div>
+						<div class="col-xs-2 nopadding">
+							<input id="newFoodItemDiscountAvl" name="newFoodItemDiscountAvl" type="checkbox" [(ngModel)]="newFoodItemDiscountAvl"/>
+							<label class="col-xs-12 form-control no-border-right-radius no-border-left-radius nomargin text-center" for="newFoodItemDiscountAvl">
+								<i class="fa fa-check-square-o fa-green fa-small" *ngIf="newFoodItemDiscountAvl" aria-hidden="true"></i> 
+								<i class="fa fa-square-o fa-black fa-small" *ngIf="!newFoodItemDiscountAvl" aria-hidden="true"></i> 
+							</label>
+						</div>
+						<div class="col-xs-1 nopadding text-center">					
+							<a class="form-control add-remove-btn no-border-left-radius no-border-right-radius" href="javascript:void(0)" (click)="addItemToManuList('food')"><i class="fa fa-plus-circle fa-small fa-black" aria-hidden="true"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="row added-menu-list" *ngIf="foodMenuList.length">
+					<div class="col-xs-12" *ngFor="let foodMenu of foodMenuList; let i = index">
+						<div class="col-xs-6 nopadding">
+							<input type="text" class="form-control no-border-left-radius no-border-right-radius" id="food_itemName_{{i}}" name="food_itemName_{{i}}" [(ngModel)] = "foodMenu.itemName" />
+						</div>
+						<div class="col-xs-3 nopadding">
+							<input type="number" class="form-control no-border-right-radius no-border-left-radius" id="food_itemPrice_{{i}}" name="food_itemPrice_{{i}}" [(ngModel)] = "foodMenu.itemPrice" />
+						</div>
+						<div class="col-xs-2 nopadding">
+							<input id="food_isDiscountAvl_{{i}}" name="food_isDiscountAvl_{{i}}" type="checkbox" [(ngModel)] = "foodMenu.isDiscountAvailable"/>
+							<label class="col-xs-12 nomargin form-control no-border-right-radius no-border-left-radius text-center" for="food_isDiscountAvl_{{i}}">
+								<i class="fa fa-check-square-o fa-green fa-small" *ngIf="foodMenu.isDiscountAvailable" aria-hidden="true"></i> 
+								<i class="fa fa-square-o fa-black fa-small" *ngIf="!foodMenu.isDiscountAvailable" aria-hidden="true"></i> 
+							</label>
+						</div>
+						<div class="col-xs-1 nopadding text-center">					
+							<a class="form-control add-remove-btn no-border-left-radius no-border-right-radius" href="javascript:void(0)" (click)="removeItemToManuList('food', i)"><i class="fa fa-trash-o fa-small fa-black" aria-hidden="true"></i></a>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			<div class="form-group">
+				<label for="item">{{isEditSectionVisible ? 'Edit' : 'Enter'}} Drink Menu</label>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="col-xs-6 nopadding">
+							Item Name
+						</div>
+						<div class="col-xs-3 nopadding">					
+							Item Price	
+						</div>
+						<div class="col-xs-2 nopadding">
+							Discount Avl ?
+						</div>
+						<div class="col-xs-1 nopadding text-center">	
+							&nbsp;
+						</div>
+					</div>
+					<div class="col-xs-12">
+						<div class="col-xs-6 nopadding">
+							<input type="text" class="form-control no-border-left-radius no-border-right-radius" id="itemName" name="itemName" placeholder="Add Item Name" [(ngModel)]="newDrinkItemName"/>
+						</div>
+						<div class="col-xs-3 nopadding">					
+							<input type="number" class="form-control no-border-right-radius no-border-left-radius" id="itemPrice" name="itemPrice" placeholder="Add Price" [(ngModel)]="newDrinkItemPrice"/>					
+						</div>
+						<div class="col-xs-2 nopadding">
+							<input id="newDrinkItemDiscountAvl" name="newDrinkItemDiscountAvl" type="checkbox" [(ngModel)]="newDrinkItemDiscountAvl"/>
+							<label class="col-xs-12 nomargin form-control no-border-right-radius no-border-left-radius text-center" for="newDrinkItemDiscountAvl">
+								<i class="fa fa-check-square-o fa-green fa-small" *ngIf="newDrinkItemDiscountAvl" aria-hidden="true"></i> 
+								<i class="fa fa-square-o fa-black fa-small" *ngIf="!newDrinkItemDiscountAvl" aria-hidden="true"></i> 
+							</label>
+						</div>
+						<div class="col-xs-1 nopadding text-center">	
+							<a class="form-control add-remove-btn no-border-left-radius no-border-right-radius" href="javascript:void(0)" (click)="addItemToManuList('drink')"><i class="fa fa-plus-circle fa-small fa-black" aria-hidden="true"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="row added-menu-list" *ngIf="drinkMenuList.length">
+					<div class="col-xs-12" *ngFor="let drinkMenu of drinkMenuList; let i = index">
+						<div class="col-xs-6 nopadding">
+							<input type="text" class="form-control no-border-left-radius no-border-right-radius" id="drink_itemName_{{i}}" name="drink_itemName_{{i}}" [(ngModel)] = "drinkMenu.itemName" />
+						</div>
+						<div class="col-xs-3 nopadding">		
+							<input type="number" class="form-control no-border-right-radius no-border-left-radius" id="drink_itemPrice_{{i}}" name="drink_itemPrice_{{i}}" [(ngModel)] = "drinkMenu.itemPrice" />
+						</div>
+						<div class="col-xs-2 nopadding">
+							<input id="drink_isDiscountAvl_{{i}}" name="drink_isDiscountAvl_{{i}}" type="checkbox" [(ngModel)] = "drinkMenu.isDiscountAvailable"/>
+							<label class="col-xs-12 nomargin form-control no-border-right-radius no-border-left-radius text-center" for="drink_isDiscountAvl_{{i}}">
+								<i class="fa fa-check-square-o fa-green fa-small" *ngIf="drinkMenu.isDiscountAvailable" aria-hidden="true"></i> 
+								<i class="fa fa-square-o fa-black fa-small" *ngIf="!drinkMenu.isDiscountAvailable" aria-hidden="true"></i> 
+							</label>
+						</div>
+						<div class="col-xs-1 nopadding text-center">	
+							<a class="form-control add-remove-btn no-border-left-radius no-border-right-radius" href="javascript:void(0)" (click)="removeItemToManuList('drink', i)"><i class="fa fa-trash-o fa-small fa-black" aria-hidden="true"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group text-center">
+				<a href="javascript:void(0)" class="btn btn-small" (click)="saveDetails()">
+					{{isEditSectionVisible ? 'Edit' : 'Save'}} Details
+				</a>
+				<a href="javascript:void(0)" class="btn btn-small" (click)="onCancelEditBtnClick()">
+					Cancel {{isEditSectionVisible ? 'Edit' : 'Add'}}
+				</a>
+			</div>
+		</form>
+	</div>
+</div>

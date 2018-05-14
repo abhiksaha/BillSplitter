@@ -1,0 +1,76 @@
+/* You can add global styles to this file, and also import other style files */
+*{margin: 0; padding: 0;transition: all 0.5s ease-out;}
+h1,h2,h3,h4,h5,h6,p{ margin: 0}
+p{margin-top: 5px;}
+body{
+    color: #000; 
+    text-transform: uppercase; 
+    background: #fff; 
+    font-family: 'PT Sans', sans-serif;
+	font-size:12px;    
+}
+.nomargin{margin: 0 !important;}
+.nopadding{padding: 0 !important;}
+.padR0{ padding-right: 0!important;}
+.padL0{ padding-left: 0!important;}
+.marB0{ margin-bottom: 0 !important;}
+.padL15{ padding-left: 15px;}
+.marT10 { margin-top:10px;}
+.marT5{ margin-top:5px;}
+.marT100{ margin-top:100px;}
+.clear{ clear:both; }
+.no-border-right-radius{
+	border-top-right-radius:0px;
+	border-bottom-right-radius:0px;
+	border-right: none;
+}
+.no-border-left-radius{
+	border-top-left-radius:0px;
+	border-bottom-left-radius:0px;
+}
+.no-border-bottom{
+	border-bottom:none;
+}
+/*fa styles*/
+.fa{ color: #fff; font-size: 30px;}
+.fa-black{color: #000;}
+.fa-small{ font-size: 20px;}
+.fa-green{ color:#0bc958;}
+a, a:hover, a:active{ color: #fff!important; text-decoration: none!important;}
+.btn{ background:rgba(0,149,255,0.8); min-width: 50%; line-height: 25px; color:#fff;}
+.btn-small{ min-width:auto;}
+/*header*/
+header{ 
+    background: rgba(0, 0, 0, 0.9); 
+    color: #fff; 
+    height: 60px; 
+    padding-top: 10px;
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+}
+.user{ vertical-align: super; margin-right: 5px;}
+.main-container{ padding: 20px 15px; margin-top: 70px;}
+
+input[type="checkbox"],
+input[type="radio"]{
+    position: absolute;
+    left: -9999px;
+    display: none;
+}
+.error-block ul{
+	padding-left: 30px;
+}
+.logo h3{
+	line-height:50px;
+}
+.user-name{
+	padding-top: 5px;
+	padding-left:15px;
+}
+
+ @media screen and (max-width:992px){
+     .main-container{ margin-top: 130px;}
+     .sidebar{ height:60px!important; }
+     .w_20{width: 20%;  float: left;}
+ }

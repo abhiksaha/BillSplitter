@@ -1,0 +1,65 @@
+.item-selection-modal{
+	width:80%;
+	position:absolute;
+	top:0;
+	left:50%;
+	margin-left:-40%;
+	background:#fff;
+	border-radius:5px;
+	box-shadow:0 0 9px 0px #000;
+	z-index:101;
+	padding-bottom:15px;
+}
+.item-selection-modal .split-modal-content{
+	margin-bottom:15px;
+}
+.fixed-header-table-content{
+	padding-right:20px;
+}
+.table-content{	
+	height:350px;
+	overflow-y: scroll;
+}
+.table-content table thead tr th{
+	visibility:hidden;
+	padding:0;
+	height:0;
+	line-height:0;
+	margin:0;
+}
+.item-selection-modal-ovelay{
+	background:rgba(0,0,0,0.4);
+	position:fixed;
+	width:100%;
+	height:100%;
+	top:0;
+	left:0;
+}
+
+.section-header {
+	background: rgba(0, 0, 0, 0.7);
+	padding: 5px 15px;
+	border-radius: 5px;
+	color: #fff;
+}
+.section-header h4{
+	line-height: 40px;
+}
+.item-container{
+	background:rgba(0, 0, 0, 0.1);
+	border-radius:5px;
+	padding:15px;
+}
+.tax-discount-container h5{
+	border-bottom:1px solid #aaa;
+	margin-bottom:10px;
+	padding-bottom:10px;
+}
+.add-tax-btn{
+	border-radius: 0 5px 5px 0;
+    background: #aaa;
+    text-align: center;
+    height: 34px;
+    line-height: 34px;
+    border: 1px solid #ccc;
+}
